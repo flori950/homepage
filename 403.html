@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Forbidden - Florian Jäger Portfolio</title>
+  <meta name="description" content="Access to this resource is forbidden. Return to Florian Jäger's portfolio homepage.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://florian-hunter.de/">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .error-container {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 1rem;
+    }
+    .error-code {
+      font-size: 6rem;
+      font-weight: bold;
+      margin: 0;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .error-message {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      opacity: 0.9;
+    }
+    .error-description {
+      font-size: 1rem;
+      margin: 1.5rem 0;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+    .home-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #fff;
+      color: #ee5a24;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    .home-button:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <h1 class="error-code">403</h1>
+    <h2 class="error-message">Access Forbidden</h2>
+    <p class="error-description">
+      You don't have permission to access this resource. 
+      This may be due to security restrictions or the resource may be private.
+    </p>
+    
+    <a href="/" class="home-button">Return to Portfolio</a>
+    
+    <script>
+      // Auto-redirect after 5 seconds
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 5000);
+    </script>
+  </div>
+</body>
+</html>

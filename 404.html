@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found - Florian Jäger Portfolio</title>
+  <meta name="description" content="The page you are looking for could not be found. Return to Florian Jäger's portfolio homepage.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://florian-hunter.de/">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .error-container {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 1rem;
+    }
+    .error-code {
+      font-size: 6rem;
+      font-weight: bold;
+      margin: 0;
+      color: #ffdb70;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .error-message {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      opacity: 0.9;
+    }
+    .error-description {
+      font-size: 1rem;
+      margin: 1.5rem 0;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+    .home-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #ffdb70;
+      color: #333;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    .home-button:hover {
+      background: #f4d03f;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 219, 112, 0.4);
+    }
+    .search-box {
+      margin: 2rem 0;
+    }
+    .search-box input {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 200px;
+      text-align: center;
+    }
+    .search-box input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <h1 class="error-code">404</h1>
+    <h2 class="error-message">Page Not Found</h2>
+    <p class="error-description">
+      Sorry, the page you are looking for doesn't exist or has been moved. 
+      Let's get you back to exploring my portfolio!
+    </p>
+    
+    <div class="search-box">
+      <input type="text" placeholder="Search portfolio..." id="searchInput">
+    </div>
+    
+    <a href="/" class="home-button">Return to Portfolio</a>
+    
+    <script>
+      // Auto-redirect after 10 seconds
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 10000);
+      
+      // Search functionality
+      document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          window.location.href = '/#' + this.value.toLowerCase().replace(/[^a-z]/g, '');
+        }
+      });
+      
+      // Add some interactive elements
+      document.querySelector('.error-code').addEventListener('click', function() {
+        this.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1)';
+        }, 200);
+      });
+    </script>
+  </div>
+</body>
+</html>

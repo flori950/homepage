@@ -1,0 +1,171 @@
+# Robots.txt for Florian Jäger Portfolio
+# https://florian-hunter.de/robots.txt
+
+User-agent: *
+Allow: /
+
+# Explicitly allow important pages
+Allow: /index.html
+Allow: /#about
+Allow: /#resume
+Allow: /#hobbies
+Allow: /#contact
+
+# Allow assets and resources
+Allow: /assets/
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+
+# Disallow contact scraping and data harvesting
+Disallow: /contact-data/
+Disallow: /email/
+Disallow: /phone/
+Disallow: /*email*
+Disallow: /*phone*
+Disallow: /*contact*
+Disallow: /*.txt$
+Disallow: /temp/
+Disallow: /tmp/
+Disallow: /*?print=*
+Disallow: /*?sid=*
+Disallow: /*?sessionid=*
+
+# Prevent aggressive crawling
+Crawl-delay: 2
+
+# Sitemap location
+Sitemap: https://florian-hunter.de/sitemap.xml
+
+# Specific instructions for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 3
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 3
+
+# Block known scrapers and harvesters
+User-agent: EmailSiphon
+Disallow: /
+
+User-agent: EmailWolf
+Disallow: /
+
+User-agent: ExtractorPro
+Disallow: /
+
+User-agent: CherryPicker
+Disallow: /
+
+User-agent: EmailCollector
+Disallow: /
+
+User-agent: WebBandit
+Disallow: /
+
+User-agent: EmailSeeker
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: NetMechanic
+Disallow: /
+
+User-agent: URLy*Warning
+Disallow: /
+
+User-agent: Wget
+Disallow: /
+
+User-agent: WebStripper
+Disallow: /
+
+User-agent: WebSauger
+Disallow: /
+
+User-agent: WebPictures
+Disallow: /
+
+User-agent: WebEMailExtrac*
+Disallow: /
+
+User-agent: WebCapture
+Disallow: /
+
+User-agent: WebAuto
+Disallow: /
+
+User-agent: aureate
+Disallow: /
+
+User-agent: StealThis
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+User-agent: ProWebWalker
+Disallow: /
+
+User-agent: CheeseBot
+Disallow: /
+
+User-agent: LexiBot
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: LinkextractorPro
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: TeleportPro
+Disallow: /
+
+User-agent: WebWhacker
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+# Social media crawlers (allowed but limited)
+User-agent: facebookexternalhit
+Allow: /
+Crawl-delay: 2
+
+User-agent: Twitterbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: LinkedInBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: WhatsApp
+Allow: /
+Crawl-delay: 3

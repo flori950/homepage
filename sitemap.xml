@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Main page with language alternatives -->
+  <url>
+    <loc>https://florian-hunter.de/</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://florian-hunter.de/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://florian-hunter.de/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://florian-hunter.de/" />
+    
+    <!-- Image sitemap entries -->
+    <image:image>
+      <image:loc>https://florian-hunter.de/assets/images/my-avatar.png</image:loc>
+      <image:title>Florian Jäger - Cloud-Native Architect</image:title>
+      <image:caption>Professional photo of Florian Jäger, Cloud-Native Architect and Software Engineer</image:caption>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://florian-hunter.de/assets/images/homepage-logo-white-transparrent.png</image:loc>
+      <image:title>Florian Jäger Portfolio Logo</image:title>
+      <image:caption>Professional brand logo for Florian Jäger's portfolio website</image:caption>
+    </image:image>
+  </url>
+
+  <!-- About section -->
+  <url>
+    <loc>https://florian-hunter.de/#about</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://florian-hunter.de/#about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://florian-hunter.de/#about" />
+  </url>
+
+  <!-- Resume section -->
+  <url>
+    <loc>https://florian-hunter.de/#resume</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://florian-hunter.de/#resume" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://florian-hunter.de/#resume" />
+  </url>
+
+  <!-- Hobbies section -->
+  <url>
+    <loc>https://florian-hunter.de/#hobbies</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://florian-hunter.de/#hobbies" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://florian-hunter.de/#hobbies" />
+  </url>
+
+  <!-- Contact section -->
+  <url>
+    <loc>https://florian-hunter.de/#contact</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://florian-hunter.de/#contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://florian-hunter.de/#contact" />
+  </url>
+
+  <!-- German language version -->
+  <url>
+    <loc>https://florian-hunter.de/</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://florian-hunter.de/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://florian-hunter.de/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://florian-hunter.de/" />
+  </url>
+
+</urlset>
