@@ -1,0 +1,7 @@
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="30" cy="30" r="28" fill="#1a5490" stroke="#ffffff" stroke-width="2"/>
+  <text x="30" y="20" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8" font-weight="bold">SFC</text>
+  <text x="30" y="32" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="6">BERLIN</text>
+  <text x="30" y="42" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="5">FRIEDRICHSHAIN</text>
+  <circle cx="30" cy="48" r="3" fill="white"/>
+</svg>
