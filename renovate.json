@@ -2,14 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Renovate configuration for Florian Jäger's Portfolio Website",
   "extends": [
-    "config:base",
-    "docker:enableMajor",
+    "config:recommended",
     ":dependencyDashboard",
     ":semanticCommits",
     ":automergeDisabled"
   ],
   "timezone": "Europe/Berlin",
   "schedule": ["before 6am on Monday"],
+  "platform": "github",
+  "repositories": ["{{REPOSITORY}}"],
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "labels": ["dependencies", "renovate"],
   "assignees": ["florian-hunter"],
   "reviewers": ["florian-hunter"],
