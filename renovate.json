@@ -1,0 +1,84 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Renovate configuration for Florian Jäger's Portfolio Website",
+  "extends": [
+    "config:base",
+    "docker:enableMajor",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":automergeDisabled"
+  ],
+  "timezone": "Europe/Berlin",
+  "schedule": ["before 6am on Monday"],
+  "labels": ["dependencies", "renovate"],
+  "assignees": ["florian-hunter"],
+  "reviewers": ["florian-hunter"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "stabilityDays": 3,
+  "commitMessagePrefix": "chore(deps):",
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "rebaseWhen": "conflicted",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on Monday"]
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "description": "Auto-merge patch updates for stable packages",
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Group all non-major updates together",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    },
+    {
+      "description": "Separate major updates",
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["major-update"],
+      "reviewers": ["florian-hunter"]
+    },
+    {
+      "description": "Special handling for security updates",
+      "matchPackagePatterns": ["*"],
+      "matchCurrentVersion": "!/^0/",
+      "vulnerabilityAlerts": {
+        "enabled": true
+      },
+      "addLabels": ["security"],
+      "prPriority": 10
+    }
+  ],
+  "regexManagers": [
+    {
+      "description": "Update HTML dependencies and CDN links",
+      "fileMatch": ["(^|/).*\\.html$"],
+      "matchStrings": [
+        "(?<depName>[^@\\s]+)@(?<currentValue>[^\\s\"']+)",
+        "(?<depName>https?://[^/]+/[^@]+)@(?<currentValue>[^/\\s\"']+)",
+        "(?<depName>https?://cdn\\.jsdelivr\\.net/npm/[^@]+)@(?<currentValue>[^/\\s\"']+)"
+      ],
+      "datasourceTemplate": "npm",
+      "versioningTemplate": "npm"
+    },
+    {
+      "description": "Update CSS framework versions in HTML",
+      "fileMatch": ["(^|/).*\\.html$"],
+      "matchStrings": [
+        "<!-- renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) -->\\s*.*?(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ]
+    }
+  ]
+}
