@@ -1,78 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Renovate configuration for Florian Jäger's Portfolio Website - CDN Dependencies Only",
+  "description": "Renovate configuration for ionicons CDN updates",
   "extends": [
     "config:recommended",
     ":dependencyDashboard",
     ":semanticCommits"
   ],
   "enabledManagers": ["regex"],
-  "ignoreDeps": ["*"],
-  "regexManagers": [
-    {
-      "fileMatch": ["^index\\.html$"],
-      "matchStrings": [
-        "https:\\/\\/unpkg\\.com\\/ionicons@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\/dist\\/ionicons\\/ionicons\\.(?:esm\\.)?js"
-      ],
-      "datasourceTemplate": "npm",
-      "depNameTemplate": "ionicons",
-      "versioningTemplate": "semver"
-    }
-  ],
-  "platform": "github",
-  "repositories": ["{{REPOSITORY}}"],
-  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-  "labels": ["dependencies", "renovate"],
-  "assignees": ["florian-hunter"],
-  "reviewers": ["florian-hunter"],
-  "prConcurrentLimit": 5,
-  "prHourlyLimit": 2,
-  "stabilityDays": 3,
-  "commitMessagePrefix": "chore(deps):",
-  "commitMessageAction": "update",
-  "commitMessageTopic": "{{depName}}",
-  "commitMessageExtra": "to {{newVersion}}",
-  "rebaseWhen": "conflicted",
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["before 6am on Monday"]
-  },
-  "vulnerabilityAlerts": {
-    "enabled": true,
-    "schedule": ["at any time"]
-  },
-  "packageRules": [
-    {
-      "description": "Auto-merge patch updates for stable packages",
-      "matchUpdateTypes": ["patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true,
-      "automergeType": "pr",
-      "platformAutomerge": true
-    },
-    {
-      "description": "Group all non-major updates together",
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch"
-    },
-    {
-      "description": "Separate major updates",
-      "matchUpdateTypes": ["major"],
-      "addLabels": ["major-update"],
-      "reviewers": ["florian-hunter"]
-    },
-    {
-      "description": "Special handling for security updates",
-      "matchPackagePatterns": ["*"],
-      "matchCurrentVersion": "!/^0/",
-      "vulnerabilityAlerts": {
-        "enabled": true
-      },
-      "addLabels": ["security"],
-      "prPriority": 10
-    }
-  ],
+  "assignees": ["flori950"],
+  "labels": ["dependencies"],
   "regexManagers": [
     {
       "fileMatch": ["^index\\.html$"],
@@ -82,13 +18,22 @@
       "datasourceTemplate": "npm",
       "depNameTemplate": "ionicons",
       "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["major-update"],
+      "automerge": false
     },
     {
-      "description": "Update CSS framework versions in HTML",
-      "fileMatch": ["(^|/).*\\.html$"],
-      "matchStrings": [
-        "<!-- renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) -->\\s*.*?(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ]
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
-  ]
+  ],
+  "prConcurrentLimit": 2,
+  "prHourlyLimit": 1,
+  "vulnerabilityAlerts": {
+    "enabled": true
+  }
 }
