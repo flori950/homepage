@@ -2690,17 +2690,12 @@
   -->
   <script src="./assets/js/lang/en.js?v=7"></script>
   <script src="./assets/js/lang/de.js?v=7"></script>
-  <script src="./assets/js/links-config.js?v=8"></script>
-  <script src="./assets/js/link-manager.js?v=9"></script>
-  <script src="./assets/js/i18n-manager.js?v=8"></script>
-  <script src="./assets/js/script.js?v=8"></script>
-  <script src="./assets/js/security.js?v=2"></script>
-
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- Load minified and bundled JS -->
+  <script src="./dist/bundle.min.js" defer></script>
+  
+  <!-- Load ionicons from CDN with SRI hash -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" integrity="sha384-6VkzJvN2vVvdxfE0BT0l3yEcRqHJ0lm7v/TY3uJm8yD+wPzTzB4v9F/GX2U/Zz0G" crossorigin="anonymous"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" integrity="sha384-6VkzJvN2vVvdxfE0BT0l3yEcRqHJ0lm7v/TY3uJm8yD+wPzTzB4v9F/GX2U/Zz0G" crossorigin="anonymous"></script>
 
 </body>
 
