@@ -9,6 +9,17 @@
   ],
   "timezone": "Europe/Berlin",
   "schedule": ["before 6am on Monday"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^index\\.html$"],
+      "matchStrings": [
+        "https:\\/\\/unpkg\\.com\\/ionicons@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\/dist\\/ionicons\\/ionicons\\.(?:esm\\.)?js"
+      ],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "ionicons",
+      "versioningTemplate": "semver"
+    }
+  ],
   "platform": "github",
   "repositories": ["{{REPOSITORY}}"],
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
@@ -32,6 +43,14 @@
     "schedule": ["at any time"]
   },
   "packageRules": [
+    {
+      "description": "Configure ionicons CDN updates",
+      "matchSourceUrls": ["https://unpkg.com/ionicons"],
+      "extractVersion": "^.*?@(?<version>\\d+\\.\\d+\\.\\d+)",
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "ionicons",
+      "versioningTemplate": "semver"
+    },
     {
       "description": "Auto-merge patch updates for stable packages",
       "matchUpdateTypes": ["patch"],
