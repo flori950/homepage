@@ -4,15 +4,15 @@ on:
     branches: [main]
 
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  ftp-deploy:
+    name: 🎉 Deploy to FTP
     runs-on: ubuntu-latest
     
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
-    
-    - name: 📂 Sync files
+      
+    - name: 📂 Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
