@@ -23,23 +23,37 @@ jobs:
     - name: 📦 Install dependencies
       run: |
         npm init -y
-        npm install -g htmlhint stylelint eslint
-        npm install --save-dev htmlhint stylelint stylelint-config-standard eslint
+        npm install htmlhint stylelint stylelint-config-standard eslint --save-dev
         
     - name: 🔍 HTML Syntax Check
+      continue-on-error: true
       run: |
         echo "Checking HTML files..."
-        find . -name "*.html" -not -path "./node_modules/*" | xargs htmlhint --config .htmlhintrc || true
+        if find . -name "*.html" -not -path "./node_modules/*" | grep -q .; then
+          find . -name "*.html" -not -path "./node_modules/*" | xargs npx htmlhint --config .htmlhintrc
+        else
+          echo "No HTML files found"
+        fi
         
     - name: 🎨 CSS Syntax Check  
+      continue-on-error: true
       run: |
         echo "Checking CSS files..."
-        find . -name "*.css" -not -path "./node_modules/*" | xargs stylelint --config .stylelintrc.json || true
+        if find . -name "*.css" -not -path "./node_modules/*" | grep -q .; then
+          find . -name "*.css" -not -path "./node_modules/*" | xargs npx stylelint --config .stylelintrc.json
+        else
+          echo "No CSS files found"
+        fi
         
     - name: ⚡ JavaScript Syntax Check
+      continue-on-error: true
       run: |
         echo "Checking JavaScript files..."
-        find . -name "*.js" -not -path "./node_modules/*" | xargs eslint --config .eslintrc.json || true
+        if find . -name "*.js" -not -path "./node_modules/*" | grep -q .; then
+          find . -name "*.js" -not -path "./node_modules/*" | xargs npx eslint --config .eslintrc.json
+        else
+          echo "No JavaScript files found"
+        fi
         
     - name: 📝 Generate Report
       run: |
@@ -48,3 +62,6 @@ jobs:
         echo "- HTML: $(find . -name '*.html' -not -path './node_modules/*' | wc -l) files"
         echo "- CSS: $(find . -name '*.css' -not -path './node_modules/*' | wc -l) files" 
         echo "- JS: $(find . -name '*.js' -not -path './node_modules/*' | wc -l) files"
+        echo ""
+        echo "ℹ️  This workflow checks syntax but won't fail the build."
+        echo "📋 Check the logs above for any syntax issues to fix."
