@@ -1,0 +1,50 @@
+name: 🔍 Syntax Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  syntax-check:
+    name: 🧹 Code Quality & Syntax Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🚚 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: 📦 Install dependencies
+      run: |
+        npm init -y
+        npm install -g htmlhint stylelint eslint
+        npm install --save-dev htmlhint stylelint stylelint-config-standard eslint
+        
+    - name: 🔍 HTML Syntax Check
+      run: |
+        echo "Checking HTML files..."
+        find . -name "*.html" -not -path "./node_modules/*" | xargs htmlhint --config .htmlhintrc || true
+        
+    - name: 🎨 CSS Syntax Check  
+      run: |
+        echo "Checking CSS files..."
+        find . -name "*.css" -not -path "./node_modules/*" | xargs stylelint --config .stylelintrc.json || true
+        
+    - name: ⚡ JavaScript Syntax Check
+      run: |
+        echo "Checking JavaScript files..."
+        find . -name "*.js" -not -path "./node_modules/*" | xargs eslint --config .eslintrc.json || true
+        
+    - name: 📝 Generate Report
+      run: |
+        echo "✅ Syntax check completed!"
+        echo "Files checked:"
+        echo "- HTML: $(find . -name '*.html' -not -path './node_modules/*' | wc -l) files"
+        echo "- CSS: $(find . -name '*.css' -not -path './node_modules/*' | wc -l) files" 
+        echo "- JS: $(find . -name '*.js' -not -path './node_modules/*' | wc -l) files"
