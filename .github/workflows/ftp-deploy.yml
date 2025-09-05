@@ -1,31 +1,28 @@
-name: 🚀 Deploy website on push
+name: 🚀 Clean Deploy website on push
 on:
   push:
     branches: [main]
 
 jobs:
   ftp-deploy:
-    name: 🎉 Deploy to FTP
+    name: 🎉 Complete Clean Deploy to FTP
     runs-on: ubuntu-latest
     
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
       
-    - name: 📂 Deploy to FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ secrets.FTP_DIR }}
-        dangerous-clean-slate: true
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          README.md
-          renovate.json
-          SECURITY_AUDIT.md
-          .env*
-          .gitignore
+    - name: 🗑️ Delete everything and upload fresh (no comparison)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lftp
+        lftp -c "
+        set ssl:verify-certificate false;
+        set ftp:ssl-force true;
+        open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }};
+        lcd ${{ github.workspace }};
+        cd ${{ secrets.FTP_DIR }};
+        rm -rf *;
+        mirror --reverse --verbose --exclude-glob .git* --exclude-glob node_modules --exclude-glob README.md --exclude-glob renovate.json --exclude-glob SECURITY_AUDIT.md --exclude-glob .env* --exclude-glob .gitignore ./ ./;
+        quit;
+        "
