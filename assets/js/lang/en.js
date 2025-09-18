@@ -339,6 +339,7 @@ const enData = {
       success: "Message sent successfully! I'll get back to you soon.",
       failed: "Failed to send message. Please try again or contact me directly.",
       moveMouseVerification: "Please move your mouse and try again.",
+      copyProtected: "Contact information is protected and cannot be copied. Please use the contact links to reach out.",
       contactViaEmail: "Contact via Email",
       contactViaPhone: "Contact via Phone",
       emailDirectly: "Please email me directly at: "

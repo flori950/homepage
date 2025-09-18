@@ -27,7 +27,7 @@ function getTranslation(key) {
   return result || key;
 }
 
-// Contact Protection Functions
+// Contact Protection Functions with Enhanced Uncopyable Features
 const protectContacts = function() {
   // Check if this is a real user (simple bot detection)
   if (navigator.webdriver || window.phantom || window.__phantomas) {
@@ -47,9 +47,17 @@ const protectContacts = function() {
       decodedEmail = decodedEmail.replace(/AT/g, '@'); // Replace AT with @
       decodedEmail = decodedEmail.split('').reverse().join(''); // Reverse back
       
-      element.textContent = decodedEmail;
-      element.href = 'mailto:' + decodedEmail;
-      element.removeAttribute('data-email-protected');
+      // Try canvas rendering first, fallback to protected text if canvas fails
+      if (makeElementUncopyable(element, decodedEmail, 'mailto:' + decodedEmail)) {
+        element.removeAttribute('data-email-protected');
+      } else {
+        // Fallback: use regular text with protection
+        element.textContent = decodedEmail;
+        element.href = 'mailto:' + decodedEmail;
+        element.classList.add('uncopyable');
+        addCopyProtection(element);
+        element.removeAttribute('data-email-protected');
+      }
       
       // Add click tracking for human verification
       element.addEventListener('click', function(e) {
@@ -71,14 +79,272 @@ const protectContacts = function() {
     const encodedPhone = element.getAttribute('data-phone-protected');
     try {
       const decodedPhone = atob(encodedPhone); // Base64 decode
-      element.textContent = decodedPhone;
-      element.href = 'tel:' + decodedPhone.replace(/\s/g, '');
-      element.removeAttribute('data-phone-protected');
+      
+      // Try canvas rendering first, fallback to protected text if canvas fails
+      if (makeElementUncopyable(element, decodedPhone, 'tel:' + decodedPhone.replace(/\s/g, ''))) {
+        element.removeAttribute('data-phone-protected');
+      } else {
+        // Fallback: use regular text with protection
+        element.textContent = decodedPhone;
+        element.href = 'tel:' + decodedPhone.replace(/\s/g, '');
+        element.classList.add('uncopyable');
+        addCopyProtection(element);
+        element.removeAttribute('data-phone-protected');
+      }
     } catch (e) {
       element.textContent = getTranslation('contact.messages.contactViaPhone');
     }
   });
 };
+
+// Function to make an element completely uncopyable with improved readability
+function makeElementUncopyable(element, displayText, href) {
+  try {
+    // Add uncopyable class
+    element.classList.add('uncopyable');
+    
+    // Create canvas for rendering uncopyable text
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) {
+      console.warn('Canvas context not available, falling back to text protection');
+      return false;
+    }
+    
+    // Get container width to respect layout constraints
+    const containerWidth = element.parentElement ? element.parentElement.offsetWidth - 20 : 200;
+    const maxWidth = Math.min(containerWidth, 300); // Max 300px width
+    
+    // Set canvas styling to match the link
+    const computedStyle = window.getComputedStyle(element);
+    const fontSize = parseInt(computedStyle.fontSize) || 14;
+    const fontFamily = computedStyle.fontFamily || 'Poppins, sans-serif';
+    const color = computedStyle.color || '#ffdb70';
+    
+    // Configure canvas with high DPI support
+    const dpr = window.devicePixelRatio || 1;
+    
+    // Configure canvas context
+    ctx.font = `${fontSize}px ${fontFamily}`;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    
+    // Measure text and handle overflow
+    const textMetrics = ctx.measureText(displayText);
+    let finalText = displayText;
+    let textWidth = textMetrics.width;
+    
+    // If text is too wide, truncate with ellipsis
+    if (textWidth > maxWidth - 10) {
+      const ellipsis = '...';
+      const ellipsisWidth = ctx.measureText(ellipsis).width;
+      const availableWidth = maxWidth - 10 - ellipsisWidth;
+      
+      // Binary search to find the longest text that fits
+      let left = 0;
+      let right = displayText.length;
+      let bestFit = '';
+      
+      while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        const testText = displayText.substring(0, mid);
+        const testWidth = ctx.measureText(testText).width;
+        
+        if (testWidth <= availableWidth) {
+          bestFit = testText;
+          left = mid + 1;
+        } else {
+          right = mid - 1;
+        }
+      }
+      
+      finalText = bestFit + ellipsis;
+      textWidth = ctx.measureText(finalText).width;
+    }
+    
+    // Set canvas dimensions
+    canvas.width = Math.ceil(textWidth + 10) * dpr;
+    canvas.height = Math.ceil(fontSize + 8) * dpr;
+    
+    // Scale canvas for high DPI
+    canvas.style.width = `${Math.ceil(textWidth + 10)}px`;
+    canvas.style.height = `${Math.ceil(fontSize + 8)}px`;
+    
+    // Re-configure context after canvas resize
+    ctx.scale(dpr, dpr);
+    ctx.font = `${fontSize}px ${fontFamily}`;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    
+    // Improve text rendering quality
+    ctx.textRenderingOptimization = 'optimizeQuality';
+    ctx.imageSmoothingEnabled = true;
+    
+    // Draw the text on canvas with proper positioning
+    ctx.fillText(finalText, 5, 4);
+    
+    // Replace element content with canvas
+    element.innerHTML = '';
+    element.appendChild(canvas);
+    
+    // Set href for clicking functionality
+    element.href = href;
+    
+    // Store original text as title for accessibility
+    element.title = displayText;
+    
+    // Ensure canvas inherits proper styling
+    canvas.style.verticalAlign = 'baseline';
+    canvas.style.display = 'inline';
+    canvas.style.cursor = 'pointer';
+    
+    // Add comprehensive copy protection
+    addCopyProtection(element);
+    
+    // Prevent text selection on the entire element
+    element.style.webkitUserSelect = 'none';
+    element.style.mozUserSelect = 'none';
+    element.style.msUserSelect = 'none';
+    element.style.userSelect = 'none';
+    element.style.webkitTouchCallout = 'none';
+    element.style.webkitTapHighlightColor = 'transparent';
+    
+    // Disable drag and drop
+    element.draggable = false;
+    element.ondragstart = function() { return false; };
+    element.onselectstart = function() { return false; };
+    element.onmousedown = function() { return false; };
+    
+    return true; // Success
+  } catch (error) {
+    console.warn('Failed to create uncopyable canvas element:', error);
+    return false; // Failed
+  }
+}
+
+// Comprehensive copy protection function
+function addCopyProtection(element) {
+  // Disable right-click context menu
+  element.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+  });
+  
+  // Disable text selection
+  element.addEventListener('selectstart', function(e) {
+    e.preventDefault();
+    return false;
+  });
+  
+  // Disable drag start
+  element.addEventListener('dragstart', function(e) {
+    e.preventDefault();
+    return false;
+  });
+  
+  // Disable mouse down for selection
+  element.addEventListener('mousedown', function(e) {
+    if (e.detail > 1) { // Prevent multiple clicks from selecting
+      e.preventDefault();
+      return false;
+    }
+  });
+  
+  // Disable keyboard shortcuts
+  element.addEventListener('keydown', function(e) {
+    // Prevent Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+P, F12, etc.
+    if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 83 || e.keyCode === 80)) {
+      e.preventDefault();
+      return false;
+    }
+    
+    // Prevent F12 (Developer Tools)
+    if (e.keyCode === 123) {
+      e.preventDefault();
+      return false;
+    }
+    
+    // Prevent Ctrl+Shift+I (Developer Tools)
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+      e.preventDefault();
+      return false;
+    }
+    
+    // Prevent Ctrl+U (View Source)
+    if (e.ctrlKey && e.keyCode === 85) {
+      e.preventDefault();
+      return false;
+    }
+  });
+}
+
+// Add global copy protection for contact elements
+document.addEventListener('DOMContentLoaded', function() {
+  // Disable copy for the entire contact section
+  const contactElements = document.querySelectorAll('.contact-info, .contacts-list');
+  contactElements.forEach(element => {
+    addCopyProtection(element);
+  });
+  
+  // Monitor for copy attempts and block them
+  document.addEventListener('copy', function(e) {
+    const selection = window.getSelection().toString();
+    
+    // Check if selection contains protected contact info
+    if (selection.includes('@') || selection.includes('+49') || selection.includes('176')) {
+      e.clipboardData.setData('text/plain', '');
+      e.preventDefault();
+      
+      // Show warning message
+      const message = getTranslation('contact.messages.copyProtected') || 
+                     'Contact information is protected and cannot be copied. Please use the contact links to reach out.';
+      
+      // Create a temporary notification
+      showCopyProtectionMessage(message);
+      
+      return false;
+    }
+  });
+});
+
+// Show copy protection message
+function showCopyProtectionMessage(message) {
+  // Remove existing notification
+  const existingNotification = document.querySelector('.copy-protection-notification');
+  if (existingNotification) {
+    existingNotification.remove();
+  }
+  
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = 'copy-protection-notification';
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 0, 0, 0.9);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    z-index: 10000;
+    font-size: 14px;
+    max-width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  `;
+  notification.textContent = message;
+  
+  // Add to document
+  document.body.appendChild(notification);
+  
+  // Auto-remove after 3 seconds
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.parentNode.removeChild(notification);
+    }
+  }, 3000);
+}
 
 // Human verification through mouse movement
 let mouseMovements = 0;

@@ -371,6 +371,7 @@ const deData = {
       success: "Nachricht erfolgreich gesendet! Ich melde mich bald bei Ihnen zurück.",
       failed: "Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie mich direkt.",
       moveMouseVerification: "Bitte bewegen Sie Ihre Maus und versuchen Sie es erneut.",
+      copyProtected: "Kontaktinformationen sind geschützt und können nicht kopiert werden. Bitte verwenden Sie die Kontakt-Links.",
       contactViaEmail: "Kontakt per E-Mail",
       contactViaPhone: "Kontakt per Telefon",
       emailDirectly: "Bitte senden Sie mir direkt eine E-Mail an: "
